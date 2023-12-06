@@ -1,0 +1,4 @@
+eike|18|m|1
+hugo|20|m|2
+lucas|20|m|5
+maria|23|f|3
