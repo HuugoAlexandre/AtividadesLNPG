@@ -54,14 +54,43 @@ def showAlbums(event):
 
     windowInfo.mainloop()
 
+def numberValidation():
+    try:
+        float(yearAlbum)
+        return True
+    except: 
+        return False
 def clickedButton(event):
-    albumName = entryAlbumName.get().upper()
-    global singerName
-    singerName = entrySingerName.get().upper()
-    yearAlbum = entryYearAlbum.get().upper()
-    isRelease = v0.get().upper()
-    processData(albumName, singerName, yearAlbum, isRelease)
-
+    albumName = entryAlbumName.get().upper().strip()
+    global singerName, yearAlbum
+    singerName = entrySingerName.get().upper().strip()
+    yearAlbum = entryYearAlbum.get().upper().strip()
+    isRelease = v0.get().upper().strip()
+    if albumName == '' or singerName == '' or yearAlbum == '' or isRelease != 'YES' and isRelease != 'NO':
+        windowNoEntryDetected = Toplevel()
+        windowNoEntryDetected.title('ADVICE')
+        windowNoEntryDetected.geometry('250x200')
+        labelWarning = Label(windowNoEntryDetected, text='MISSING ENTRY!')
+        labelWarning.pack(expand=True, fill='both')
+        windowNoEntryDetected.mainloop() 
+    else:
+        if numberValidation():
+            processData(albumName, singerName, yearAlbum, isRelease)
+            windowSuccessfulSegistration = Toplevel()
+            windowSuccessfulSegistration.title('SUCCESSFUL REGISTRATION')
+            windowSuccessfulSegistration.geometry('250x200')
+            labelSuccessfulSegistration = Label(windowSuccessfulSegistration, text='ALBUM REGISTERED SUCCESSFULLY!')        
+            labelSuccessfulSegistration.configure(fg='green', font=('Helvetica', 9))
+            labelSuccessfulSegistration.pack(expand=True, fill='both')
+            windowSuccessfulSegistration.mainloop()
+        else:
+            windowNoNumberEntry = Toplevel()
+            windowNoNumberEntry.title('ADVICE')
+            windowNoNumberEntry.geometry('250x200')
+            labelWarning = Label(windowNoNumberEntry, text='ALBUM YEAR NEEDS TO BE A NUMBER!')
+            labelWarning.pack(expand=True, fill='both')
+            windowNoNumberEntry.mainloop()
+        
 def showWindowRadionAndComboOption(event):
     global windowShowResultsRadionAndCombo
     windowShowResultsRadionAndCombo = Toplevel()
@@ -141,6 +170,10 @@ def byArtist(event):
     btnTestArtist.grid(row=3, padx=20, pady=20, column=0, sticky='nswe', columnspan=3)
     btnTestArtist.bind('<Button-1>', showByArtist)
 
+def clear(event):
+    entryAlbumName.delete(0, END)
+    entrySingerName.delete(0, END)
+    entryYearAlbum.delete(0, END)
 
 def showByArtist(event):
     windowShowByArtist = Toplevel()
@@ -154,7 +187,7 @@ def showByArtist(event):
         lines = file.readlines()
         if len(lines) == 0:
             windowWarning = Toplevel()
-            windowWarning.title('Warning')
+            windowWarning.title('WARNING')
             windowWarning.geometry('250x200')
             labelWarning = Label(windowWarning, text='NO ALBUMS TO SHOW!')
             labelWarning.pack(expand=True, fill='both')
@@ -196,15 +229,10 @@ def showByArtist(event):
 
     windowShowByArtist.mainloop()
 
-
-
-
-
-
 windowMain = Tk()
 windowMain.title('Register album')
 
-labelMainRegisterAlbum = Label(text='REGISTRADOR DE ALBUM')
+labelMainRegisterAlbum = Label(text='ALBUM RECORDER')
 labelMainRegisterAlbum.grid(row=0, column=0, padx=10, pady=10, sticky='nswe',  columnspan=3)
 
 labelAlbumName = Label(text='Album name: ')
@@ -216,6 +244,7 @@ labelSingerName = Label(text='Singer\'s name: ')
 labelSingerName.grid(row=2, padx=10, pady=10, column=0, sticky='nswe', columnspan=1)
 entrySingerName = Entry(windowMain)
 entrySingerName.grid(row=2, padx=10, pady=10, column=1, sticky='nswe', columnspan=2)
+
 labelYearAlbum = Label(text='Album year: ')
 labelYearAlbum.grid(row=3, padx=10, pady=10, column=0, sticky='nswe', columnspan=1)
 entryYearAlbum = Entry(windowMain)
@@ -247,5 +276,8 @@ btnSearchByRadionAndCombo = Button(text='Look for details by period and year')
 btnSearchByRadionAndCombo.grid(row=11, padx=10, pady=10, column=0, sticky='nswe', columnspan=3)
 btnSearchByRadionAndCombo.bind('<Button-1>', searchAlbumByOption)
 
+btnClear = Button(text='Clear')
+btnClear.grid(row=12, padx=10, pady=10, column=0, sticky='nswe', columnspan=3)
+btnClear.bind('<Button-1>', clear)
 
 windowMain.mainloop()
