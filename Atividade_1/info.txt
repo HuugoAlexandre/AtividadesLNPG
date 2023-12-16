@@ -1,4 +1,11 @@
-eike|18|m|1
-hugo|20|m|2
-lucas|20|m|5
-maria|23|f|3
+Hugo|20|M|292
+Thiago|23|M|55
+Carla|22|F|76
+Ana|25|F|123
+Marcos|28|M|789
+Renata|24|F|456
+Beatriz|29|F|888
+Pedro|27|M|654
+Larissa|21|F|987
+Lucas|26|M|321
+Sofia|19|F|9934
