@@ -1,108 +1,107 @@
-def adicionarInfo(arquivo, nome, idade, sexo, telefone):
-    with open(arquivo, 'a', encoding='utf-8') as arquivo:
-        arquivo.write(f"{nome}|{idade}|{sexo}|{telefone}\n")
+filename = 'info.txt'
+def write(name, age, sex, phone):
+    with open(filename, 'a', encoding='utf-8') as file:
+        file.write(name + '|' +  age + '|' + sex + '|' + phone + '\n')
 
-def info():
-    with open('info.txt', 'a', encoding='utf-8'):
-        while True:
-            nome = input('Nome (digite 0 para sair): ')
-            if nome == '0':
-                break
+def read():
+    with open(filename, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.strip():
+                name, age, sex, phone = line.split('|')
+                print(f'Name: {name}')
+                print(f'Age: {age} years')
+                print(f'Sex: {"Male" if sex == "M" else "Female"}')
+                print(f'Phone: {phone}')
 
-            idade = input('Idade: ')
-            while not idade.isdigit():
-                print('Idade deve ser um número inteiro.')
-                idade = input('Idade: ')
+def obtain_by_name(name_interested):
+    while name_interested.isdigit():
+        name_interested = input('Name cannot be a number, try again: ')
+    
+    name_interested_list = []
+    with open(filename, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.strip():
+                name, age, sex, phone = line.split('|')
+                if name_interested.upper() in name.upper():
+                    unique_register_by_name = []
+                    unique_register_by_name.append(name)
+                    unique_register_by_name.append(age)
+                    unique_register_by_name.append(sex)
+                    unique_register_by_name.append(phone)
 
-            sexo = input('Sexo (F ou M): ').lower()
-            while sexo not in ['f', 'm']:
-                print('Sexo deve ser F ou M.')
-                sexo = input('Sexo (F ou M): ').lower()
+                    name_interested_list.append(unique_register_by_name)
 
-            telefone = input('Telefone: ')
-            while not telefone.isdigit():
-                print('Telefone deve ser um número inteiro.')
-                telefone = input('Telefone: ')
+    return name_interested_list
 
-            adicionarInfo('info.txt', nome, idade, sexo, telefone)
+def obtain_by_sex(sex_interested):
+    while sex_interested.upper() != 'M' and sex_interested.upper() != 'F':
+        sex_interested = input('Sex must be F or M: ').upper()
+    sex_interested_list = []
 
-def ler(arquivo):
-    with open(arquivo, 'r', encoding='utf-8') as file:
-        linhas = file.readlines()
+    with open(filename, 'r', encoding='utf-8') as file:
+        lines = file.readlines()
+        for line in lines:
+            if line.strip():
+                name, age, sex, phone = line.split('|')
+                if sex_interested.upper() == sex:
+                    unique_register_by_sex = []
+                    unique_register_by_sex.append(name)
+                    unique_register_by_sex.append(age)
+                    unique_register_by_sex.append(sex)
+                    unique_register_by_sex.append(phone)
 
-    for linha in linhas:
-        nome, idade, sexo, telefone = linha.strip().split('|')
-        print(f"Nome: {nome}")
-        print(f"Idade: {idade} anos")
-        print(f"Sexo: {'Masculino' if sexo == 'm' else 'Feminino'}")
-        print(f"Telefone: {telefone}")
-        print()
+                    sex_interested_list.append(unique_register_by_sex)
+    
+    return sex_interested_list
 
-def buscaUsuarioPorSexo(sexo, arquivo):
-    resultados = []
+def obtain_info():  
+    while True:
+        name = input('Name: ').capitalize()      
+        while name.isdigit() and name != '0':
+            name = input('Name cannot be a number, try again: ').capitalize()
+        while name == '':
+            name = input('Name entry empty, try again: ').capitalize()
+        if name == '0':
+            break
+        age = input('Age: ')
+        while not age.isdigit():
+            age = input('Age must be a integer: ')
+        sex = input('Sex: ').upper()
+        while sex != 'F' and sex != 'M':
+            sex = input('Sex must be F or M: ').upper()
+        phone = input('Phone: ')
+        while not phone.isdigit():
+            phone = input('Phone must be a integer: ')
 
-    with open(arquivo, 'r', encoding='utf-8') as file:
-        linhas = file.readlines()
+        write(name, age, sex, phone)
+        
+#Tete da funçao read
+#read()
 
-    for linha in linhas:
-        nome, idade, sexo_atual, telefone = linha.strip().split('|')
-        if sexo_atual.lower() == sexo.lower():
-            resultados.append({
-                'Nome': nome,
-                'Idade': idade,
-                'Sexo': 'Masculino' if sexo_atual.lower() == 'm' else 'Feminino',
-                'Telefone': telefone
-            })
+#Teste de cadastro de pessoas
+# obtain_info()
 
-    return resultados
+# Teste na buca por sexo
+# results_by_sex = obtain_by_sex('m')
+# if len(results_by_sex) != 0:
+#     for count, item in enumerate(results_by_sex, start=1):
+#         print(f'Person {count}: \n') 
+#         print(f'Name: {item[0]}')
+#         print(f'Age: {item[1]}')
+#         print(f'Sex: {item[2]}')
+#         print(f'Phone: {item[3]}')
+# else:
+#     print('No records have been registered with this gender...')
 
-def infoPorSexo(sexo_procurado, arquivo):
-    usuarios_encontrados = buscaUsuarioPorSexo(sexo_procurado, arquivo)
-
-    if usuarios_encontrados:
-        print(f"\nUsuários do sexo {sexo_procurado.upper()} encontrados:")
-        for usuario in usuarios_encontrados:
-            print(f"Nome: {usuario['Nome']}")
-            print(f"Idade: {usuario['Idade']} anos")
-            print(f"Sexo: {usuario['Sexo']}")
-            print(f"Telefone: {usuario['Telefone']}")
-            print()
-    else:
-        print(f"\nNenhum usuário do sexo {sexo_procurado.upper()} encontrado.")
-
-def buscaUsuarioPorNome(nome_procurado, arquivo):
-    resultados = []
-
-    with open(arquivo, 'r', encoding='utf-8') as file:
-        linhas = file.readlines()
-
-    for linha in linhas:
-        nome, idade, sexo, telefone = linha.strip().split('|')
-        if nome_procurado.lower() in nome.lower():
-            resultados.append({
-                'Nome': nome,
-                'Idade': idade,
-                'Sexo': 'Masculino' if sexo.lower() == 'm' else 'Feminino',
-                'Telefone': telefone
-            })
-
-    return resultados
-
-def infoPorNome(nome_procurado, arquivo):
-    usuarios_encontrados = buscaUsuarioPorNome(nome_procurado, arquivo)
-
-    if usuarios_encontrados:
-        print(f"\nUsuários encontrados com o nome '{nome_procurado}':")
-        for usuario in usuarios_encontrados:
-            print(f"Nome: {usuario['Nome']}")
-            print(f"Idade: {usuario['Idade']} anos")
-            print(f"Sexo: {usuario['Sexo']}")
-            print(f"Telefone: {usuario['Telefone']}")
-            print()
-    else:
-        print(f"\nNenhum usuário encontrado com o nome '{nome_procurado}'.")
-
-
-
-
-infoPorNome('luc', 'info.txt')
+# Teste na busca por nome        
+# results_by_name = obtain_by_name('th')
+# if len(results_by_name) != 0:
+#     for count, item in enumerate(results_by_name, start=1):
+#         print(f'Name: {item[0]}')
+#         print(f'Age: {item[1]}')
+#         print(f'Sex: {item[2]}')
+#         print(f'Phone: {item[3]}')
+# else:
+#     print('No nome detected.')
