@@ -46,6 +46,15 @@ def isEntryInfo():
     else:
         return True
 
+def sucessWindow(event):
+    windowSucefull = Toplevel()
+    windowSucefull.title('Sucefull')
+    labelSucefull = Label(windowSucefull, text='Album registered sucefully!')
+    labelSucefull.configure(font=('Arial', 9), foreground='green')
+    labelSucefull.grid(row=3, column=0, padx=20, pady=20, sticky='nswe', columnspan=3)
+    labelSucefull.pack()
+    windowSucefull.mainloop()
+
 def collectInfo(event):
     if isEntryInfo():
         entryAlbum = entryAlbumName.get().upper()
@@ -179,8 +188,3 @@ def buildMainScreen(windowMain, buttonsFunctions):
     btnClear = Button(text='Clear')
     btnClear.grid(row=12, padx=10, pady=10, column=0, sticky='nswe', columnspan=3)
     btnClear.bind('<Button-1>', buttonsFunctions['clear'])
-
-
-
-    
-
