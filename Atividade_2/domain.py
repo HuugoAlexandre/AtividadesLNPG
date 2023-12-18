@@ -175,7 +175,7 @@ def getInfo(event):
         if isEntriesAllTyped(entries):
             sendInfo()
         else:
-            warningWindow('YOU DIDN\'T WRITE ANY NAME!')
+            warningWindow('INCORRECT ENTRY!')
     else:
         windowNoEntryDetected()
 
