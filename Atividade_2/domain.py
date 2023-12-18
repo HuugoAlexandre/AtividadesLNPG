@@ -25,14 +25,11 @@ def fillTextBoxShowAlbumsWithBD(bd, text_box, window_main):
 def lookByPeriods(event):
     global windowByDetails
     windowByDetails = Toplevel()
-    windowByDetails.geometry('600x400')
     
-
     global varRadioAndCombo
     
     varRadioAndCombo = byDetails(event, windowByDetails, showByDetails)
     
-
     windowByDetails.mainloop()
 
 def filterByDetails(bd, window_main, text_box):
@@ -102,8 +99,6 @@ def filterByDetails(bd, window_main, text_box):
 
                     found_albums_by_period[year].add(album)
 
-
-
 def showAlbums(event):
     window_main, text = windowAlbums()
 
@@ -112,7 +107,6 @@ def showAlbums(event):
     fillTextBoxShowAlbumsWithBD(infos, text, window_main)
 
     window_main.mainloop()
-
 
 def filterByArtist(bd, window_main, text_box):
     entry_artist = entryByArtist.get().upper()
@@ -138,7 +132,6 @@ def filterByArtist(bd, window_main, text_box):
                 text_box.insert(END, f'Is Release? {is_release}\n')
 
                 found_albums_by_artist[name].add(album)
-
 
 def showByDetails(event):
     window_show_by_details, text_box = windowShowByDetails()
@@ -186,9 +179,6 @@ def getInfo(event):
     else:
         windowNoEntryDetected()
 
-
-    
-
 def SearchByArtist(event):
     global entryByArtist
     entryByArtist = byArtist(event, showByArtist)
@@ -199,7 +189,7 @@ if __name__ == '__main__':
         'sendFunction':getInfo,
         'showAlbums':showAlbums,
         'SearchByArtist':SearchByArtist,
-        'look':lookByPeriods, #falta
+        'look':lookByPeriods,
         'clear':clear, 
     }
 
