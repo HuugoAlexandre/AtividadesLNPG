@@ -174,6 +174,7 @@ def getInfo(event):
     if entries:
         if isEntriesAllTyped(entries):
             sendInfo()
+            sucessWindow(event)
         else:
             warningWindow('INCORRECT ENTRY!')
     else:
