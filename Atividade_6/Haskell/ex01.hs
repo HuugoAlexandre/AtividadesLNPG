@@ -1,4 +1,4 @@
--- Definição do tipo de dados para representar um passageiro
+-- Definição do tipo de dados para representar um passageiro, desnecessário nesse exercício, mas deixei para lembrar algo semelhante a struct em C
 data Passenger = Passenger { rg :: String
                            , passagem :: String
                            , dataNascimentoRG :: String
