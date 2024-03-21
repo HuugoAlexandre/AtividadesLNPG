@@ -1,25 +1,15 @@
 #include <stdio.h>
 
-char pegaOperador() {
-    char operador;
-    printf("Digite a operação (+, -, *, /): ");
+char pegaOperador() {	
+    	char operador;
 	scanf("%c", &operador);
-
-    return operador;
+    	return operador;
 }
 
-float pegaPrimeiroNumero() {
-    float num1;
-    printf("Digite o primeiro número: ");
-    scanf("%f", &num1);
-    return num1;
-}
-
-float pegaSegundoNumero() {
-    float num2;
-    printf("Digite o segundo número: ");
-    scanf("%f", &num2);
-    return num2;
+float pegaNumero() {
+    	float num;
+    	scanf("%f", &num);
+    	return num;
 }
 
 float soma(float num1, float num2) {
@@ -43,39 +33,43 @@ void mostraResultado(float resultado) {
 }
 
 void calcula(char operador, float num1, float num2) {
-    float resultado;
-    switch (operador) {
-    	case '+':
-        	resultado = soma(num1, num2);
-        	mostraResultado(resultado);
-        	break;
-    	case '-':
-        	resultado = subtracao(num1, num2);
-        	mostraResultado(resultado);
-        	break;
-    	case '*':
-        	resultado = multiplicacao(num1, num2);
+	
+    	float resultado;
+	switch (operador) {
+		case '+':
+			resultado = soma(num1, num2);
 			mostraResultado(resultado);
-        	break;
-    	case '/':
-        	if (num2 != 0) {
+			break;
+		case '-':
+			resultado = subtracao(num1, num2);
+			mostraResultado(resultado);
+			break;
+		case '*':
+			resultado = multiplicacao(num1, num2);
+			mostraResultado(resultado);
+			break;
+		case '/':
+			if (num2 != 0) {
 				resultado = divisao(num1, num2);
 				mostraResultado(resultado);
 			} else {
 				printf("Erro! Divisão por zero.\n");
 			}
-        	break;
-    	default:
-        	printf("Operador inválido.\n");
+			break;
+		default:
+			printf("Operador inválido.\n");
 	}
 }
 
 int main() {
-    char operador = pegaOperador();
-    float num1 = pegaPrimeiroNumero();
-    float num2 = pegaSegundoNumero();
+	printf("Digite a operação (+, -, *, /): ");
+	char operador = pegaOperador();
+	printf("Digite o primeiro número: ");
+    	float num1 = pegaNumero();
+	printf("Digite o segundo número: ");
+    	float num2 = pegaNumero();
 
-    calcula(operador, num1, num2);
+    	calcula(operador, num1, num2);
 	
 	return 0;
 }
