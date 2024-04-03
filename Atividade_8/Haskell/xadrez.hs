@@ -1,33 +1,30 @@
 data Peca = Peca {
     tipo :: TipoPeca,
     cor :: CorPeca,
-    posicao :: (Int, Int)
 } deriving (Show)
 
 data TipoPeca = Rei | Rainha | Torre | Bispo | Cavalo | Peao deriving (Show)
 
 data CorPeca = Branco | Preto deriving (Show)
 
-data Tabuleiro = Tabuleiro {
-    pecas :: [Peca] -- Lista de peças no tabuleiro
-} deriving (Show)
+type Posicao = (Int, Int)
 
-moverPeca :: Peca -> (Int, Int) -> Peca
+type Tabuleiro = [[Maybe Peca]]
 
-capturarPeca :: Peca -> Peca -> Maybe Peca
+moverPeca :: Tabuleiro -> Posicao -> Posicao -> Maybe Tabuleiro 
 
-verificarMovimentoPossivel :: Peca -> (Int, Int) -> Bool
+ehCapturavel :: Peca -> Peca -> Bool
 
-informacoesPeca :: Peca -> (TipoPeca, CorPeca, (Int, Int))
+verificarMovimentoPossivel :: Peca -> Posicao -> Bool
+
+verificarLimiteTabuleiro :: Posicao -> Bool
+
+informacoesPeca :: Peca -> (TipoPeca, CorPeca)
 
 inicializarTabuleiro :: Tabuleiro
 
-adicionarPeca :: Tabuleiro -> Peca -> Tabuleiro
+posicaoVazia :: Tabuleiro -> Posicao -> Bool
 
-removerPeca :: Tabuleiro -> Peca -> Tabuleiro
-
-posicaoVazia :: Tabuleiro -> (Int, Int) -> Bool
-
-obterPeca :: Tabuleiro -> (Int, Int) -> Maybe Peca
+obterPeca :: Tabuleiro -> Posicao -> Maybe Peca
 
 obterPecasPorCor :: Tabuleiro -> CorPeca -> [Peca]
